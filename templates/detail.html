@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="main">
+    <div class="t3" style="margin: 8px auto">
+        <table width="100%" align="center" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <a href="#">4am</a>
+                     »
+                    <a href="#">板块</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="t" style="margin-bottom: 0;border-bottom: 0">
+        <table cellspacing="0" cellpadding="0" width="100%" align="center">
+             <tbody>
+              <tr>
+               <td class="h"> --&gt; <b>本頁主題:</b>{{ topic.title }}</td>
+               <td class="h" style="text-align:right;"></td>
+              </tr>
+             </tbody>
+        </table>
+    </div>
+    <div class="t t2" style="border-top: 0">
+        <table cellspacing="0" cellpadding="0" width="100%" align="center">
+            <tbody>
+                <tr class="tr1 do_not_catch">
+                    <th width="20%" rowspan="2" class="r_two">
+                        <b>{{ topic.author }}</b>
+                        <div style="padding: 10px 0;">
+                            <table width="98%" cellspacing="0" cellpadding="0" style="border: 0">
+                                <tbody>
+                                    <tr>
+                                        <td class="tac" style="overflow: hidden;border: 0">
+                                            <img src="#">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </th>
+                    <th height="100%" valign="top" style="padding: 5px 15px 0 15px;border: 0;width: 80%;overflow: hidden">
+                        <table width="100%" align="center" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td bgcolor valign="top">
+                                        <h4>{{ topic.title }}</h4>
+                                        <br>
+                                        <div class="tpc_content do_not_catch">
+                                            <br>
+                                            <br>
+                                            {{ topic.content }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--评论区-->
+{#    {% for comment in comment_list %}#}
+{#    <div class="t t2">#}
+{#        <table cellspacing="0" cellpadding="0" width="100%" align="center">#}
+{#            <tbody>#}
+{#                <tr class="tr1 do_not_catch">#}
+{#                    <th width="20%" rowspan="2" class="r_two">#}
+{#                        <b>{{ comment.user_name }}</b>#}
+{#                    </th>#}
+{#                    <th height="100%" valign="top" style="padding: 5px 15px 0 15px;border: 0;width: 80%;overflow: hidden">#}
+{#                        <div class="tpc_content do_not_catch">#}
+{#                            {{ comment.content }}#}
+{#                        </div>#}
+{#                    </th>#}
+{#                </tr>#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </div>#}
+{#    {% endfor %}#}
+
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}
+<title>4am</title>
+{% endblock %}
+
+{% block css %}
+{% load static %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<div id="main">
+    <div class="t3" style="margin: 8px auto">
+        <table width="100%" align="center" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <a href="#">4am</a>
+                     »
+                    <a href="#">板块</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="t">
+        <table cellspacing="0" cellpadding="0" align="center">
+            <tbody>
+                <tr>
+                    <td class="h">
+                        <b>板块公告</b>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr class="tr2">
+                    <td style="border-bottom: 0"></td>
+                </tr>
+            </tbody>
+            <tbody id="cate_thread" style>
+                <tr class="tr1">
+                    <th class="t_one">
+                         发帖前请仔细阅读置顶版规&nbsp;
+                        <span class="smalltxt">(kwok:2017-06-11)</span>
+                        <br>
+                        <br>
+                        <b>
+                            <font size="4">
+                                <span style="color:darkblue">
+                                    发主题贴威望最低10！发帖前请仔细阅读置顶版规,技术论坛区发贴，回贴，意味着你将接受论坛规定和约束，发布广告贴、微信公号、微博号、二维码、QQ号、群号、邮箱及触犯版规的，管理员有权在不通知的情况下删贴、扣分直接禁言!
+                                </span>
+                            </font>
+                        </b>
+                        <div align="right">
+                            <a href="#">更多公告</a>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="t" style="margin: 3px auto">
+        <table cellspacing="0" cellpadding="0" width="100%" id="ajaxtable">
+            <tbody>
+                <tr>
+                    <th class="h" colspan="5" style="width: 100%">
+                        <a href="#">主板块</a>
+                        <a class="fr a2 fn" href="#">所有主题</a>
+                    </th>
+                </tr>
+            </tbody>
+            <tbody style="table-layout: fixed">
+                <tr class="tr2 tac">
+                    <td>作者</td>
+                    <td width="70%">主题</td>
+                    <td width="８%">发帖时间</td>
+                    <td>点击量</td>
+                </tr>
+                {% for topic in topic_list %}
+                <tr class="tr3 t_one tac {{ topic.pk }}">
+                    <td>
+                      <a>{{ topic.author }}</a>
+                    </td>
+                    <td class="tal" style="padding-left: 8px">
+                        <a href="{% url 'forum:detail' topic.id %}">{{ topic.title }}</a>
+                    </td>
+                    <td >
+                        <h5>{{ topic.create_date }}</h5>
+                    </td>
+                    <td>
+                        <h4>{{ topic.views }}</h4>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
