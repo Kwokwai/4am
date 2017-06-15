@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+{% block content %}
+
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>登录</title>
+</head>
+<body style="background-color: #e1edf7">
+
+<div class="login_area" style="margin-left: 480px;width: 350px;margin-top: 50px">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><strong>登录</strong></h3>
+      </div>
+      <div class="panel-body">
+        <form method="post" action="{% url 'auth:login' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="">{{ form.username.label_tag }}</label>
+            {{ form.username|add_class:"form-control" }}
+          </div>
+          <div class="form-group">
+            <label for="">{{ form.password.label_tag }}</label>
+            {{ form.password|add_class:"form-control" }}
+          </div>
+            <div class="login_bottom" ></div>
+            <div class="modal-footer">
+                <span>没有账号？<a href="{% url 'user:register' %}">立即注册</a></span>
+                <button type="submit" class="btn btn-primary" value="Submit" style="margin-left: 10px">确定</button>
+            </div>
+          <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+{% endblock %}
+

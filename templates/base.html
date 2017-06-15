@@ -21,12 +21,23 @@
         </a>
     </div>
     <div class="h guide" >
-        <a href="#">登录</a>
-        <a href="#"><b>注册</b></a>
+         {% if user.is_authenticated %}
+                <p>你已登录，欢迎你：<a href="#">{{ user.username }}</a>
+                    <a href="{% url 'auth:logout' %}?next={{ request.path }}" >退出</a>
+                </p>
+            {% else %}
+                <p>你还没有登录，请
+                   <a href="{% url 'auth:login' %}?next={{ request.path }}">登录</a>
+                    或者
+                    <a href="{% url 'user:register' %}?next={{ request.path }}">注册</a>
+                </p>
+            {% endif %}
     </div>
     <div id="showmenu" style="z-index:100;display:none;"></div>
     <div id="blank" style="height:10px; clear:both"></div>
 </div>
+
+
 
 {% block content %}
 {% endblock %}
