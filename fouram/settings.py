@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'forum',
     'user',
+    'django_comments',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,7 +83,7 @@ WSGI_APPLICATION = 'fouram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '4am',
+        'NAME': 'fouram',
         'HOST': '127.0.0.1',
         'USER': 'root',
         'PASSWORD': '123456',

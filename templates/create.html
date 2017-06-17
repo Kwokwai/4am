@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<body>
+<div class="container ">
+    <div class="row">
+        <div class="col-lg-9 at-edit">
+            <form action="" method="post">{% csrf_token %}
+                <div class="edit-title">
+                    {{ user.username }}</div>
+                <div class="edit-title">
+                    {{ form.title }}</div>
+                <div class="edit-content" style="width: 848px">
+                    {{ form.content }}
+                </div>
+
+            <button type="submit"  class="btn btn-primary">发布</button>            </form>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

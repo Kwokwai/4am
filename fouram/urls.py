@@ -22,7 +22,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('forum.urls', namespace='forum')),
     url(r'', include('user.urls', namespace='user')),
-    url(r'^', include('django.contrib.auth.urls', namespace='auth'))
+    url(r'', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^comments/', include('django_comments.urls')),
 ]
 
 

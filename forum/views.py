@@ -1,9 +1,13 @@
 #-*- coding:utf-8 -*-
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, FormView
 from django.views.generic import DetailView
 from forum.models import Topic, Tag, Category
 from django.http import HttpResponse
+from forum.forms import TopicCreateForm
+from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.models import User
 
 
 class IndexView(ListView):
@@ -35,3 +39,15 @@ class TopicDetailView(DetailView):
         kwargs['tag_list'] = Tag.objects.all().order_by('tag_name')
         return super(TopicDetailView, self).get_context_data(**kwargs)
 
+
+class TopicCreateView(FormView):
+    model = Topic
+    template_name = 'create.html'
+    form_class = TopicCreateForm
+
+    success_url = '/'
+
+    def form_valid(self, form):
+
+        form.save(self.request.user.username)
+        return super(TopicCreateView, self).form_valid(form)

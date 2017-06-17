@@ -104,3 +104,12 @@ tr {
     margin: 0 auto;
 }
 
+.t2 {
+    border-top: #A6CBE7 1px solid;
+    margin: 0 auto 5px;
+}
+
+.tr3 th {
+    text-align: left;
+    font-weight: normal;
+}

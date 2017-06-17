@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load comments %}
 {% block content %}
 
 <div id="main">
@@ -63,29 +63,91 @@
             </tbody>
         </table>
     </div>
-    <!--评论区-->
-{#    {% for comment in comment_list %}#}
-{#    <div class="t t2">#}
-{#        <table cellspacing="0" cellpadding="0" width="100%" align="center">#}
-{#            <tbody>#}
-{#                <tr class="tr1 do_not_catch">#}
-{#                    <th width="20%" rowspan="2" class="r_two">#}
-{#                        <b>{{ comment.user_name }}</b>#}
-{#                    </th>#}
-{#                    <th height="100%" valign="top" style="padding: 5px 15px 0 15px;border: 0;width: 80%;overflow: hidden">#}
-{#                        <div class="tpc_content do_not_catch">#}
-{#                            {{ comment.content }}#}
-{#                        </div>#}
-{#                    </th>#}
-{#                </tr>#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
-{#    {% endfor %}#}
+
+    <div class="t t2">
+        <table cellspacing="0" cellpadding="0" width="100%" align="center">
+            {% get_comment_list for topic as comments %}
+            {% for comment in comments %}
+            <tr class="tr3 tr1">
+                <th width="20%"  class="r_two">
+                    {{ comment.user_name }}
+                </th>
+                <th>
+                    {{ comment.comment }}
+                </th>
+            </tr>
+            {% empty %}
+            <tr>暂无评论</tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% get_comment_form for topic as blog_form %}
+<form id="comment_form" class="form-horizontal" action="{% comment_form_target %}" method="post">
+    {% csrf_token %}
+
+    {{ blog_form.object_pk }}
+    {{ blog_form.content_type }}
+    {{ blog_form.timestamp }}
+    {{ blog_form.site }}
+    {{ blog_form.submit_date }}
+    {{ blog_form.security_hash }}
+    {% if user.is_authenticated %}
+        {% if user.is_active %}
+    <div class="t">
+        <table cellpadding="0" cellspacing="0" align="center" width="90%">
+            <tr>
+                <td class="h" colspan="2"><b>回帖</b></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" width="20%" bgcolor="#F9F9EC" style="padding:7px">
+
+                    <b>用户</b><br><br>
+               　　　 {{ user.username }}
+                </td>
+                <td width="60%" bgcolor="#F9F9EC" style="padding: 7px">
+                    <div>
+                        <input type="text"  value="Re:{{ topic.title }}" size="65" readonly="readonly" style="width: 70%">
+                    </div>
+
+                        <a name="newcomment" id="newcomment"></a>
+                        <div class="control-group">
+                            <label class="control-label" for="id_comment">评论： </label>
+                            <div class="controls">
+                                <textarea rows="6"
+                                          id="id_comment" class="input-xlarge comment" name="comment"
+                                          placeholder="请输入评论内容" style="width:70%">
+                                </textarea>
+                            </div>
+                        </div>
 
 
+                    <div class="controls">
+                        <div class="form-actions">
+                            <input class="btn btn-info" id="submit_btn" type="submit" name="submit" value="提交"/>
+                            <input type="hidden" name="next" value="{%url 'forum:detail' topic.id%}"/>
+                        </div>
+                    </div>
 
-</div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+        {% endif %}
+    {% else %}
+    <div class="t">
+        <table cellpadding="0" cellspacing="0" align="center" width="90%">
+            <tr>
+                <td class="h" colspan="2"><b>回帖</b>
+                    您尚未登录，请先登录才能评论。
+            </td>
+            </tr>
+        </table>
+    </div>
+    {% endif %}
+</form>
 
 
 {% endblock %}

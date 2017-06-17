@@ -64,7 +64,7 @@
                 <tr>
                     <th class="h" colspan="5" style="width: 100%">
                         <a href="#">主板块</a>
-                        <a class="fr a2 fn" href="#">所有主题</a>
+                        <a class="fr a2 fn" href="{% url 'forum:create' %}">发布新主题</a>
                     </th>
                 </tr>
             </tbody>
@@ -76,7 +76,7 @@
                     <td>点击量</td>
                 </tr>
                 {% for topic in topic_list %}
-                <tr class="tr3 t_one tac {{ topic.pk }}">
+                <tr class="tr3 t_one tac {{ topic.id }}">
                     <td>
                       <a>{{ topic.author }}</a>
                     </td>
