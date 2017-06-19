@@ -45,6 +45,9 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+AUTH_PROFILE_MODULE = 'user.UserProfile'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -132,3 +135,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR + '/static/', ]
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace("\\", "/")

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="MySQL - fouram@localhost" uuid="9168cfe6-3bc1-4350-ad71-1be8815a38ea">
+    <data-source name="MySQL - fouram@localhost" uuid="590c2689-d8ff-4cf9-9a0c-2931367a4b0a">
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
       <introspection-scope>fouram:</introspection-scope>

@@ -48,6 +48,5 @@ class TopicCreateView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-
-        form.save(self.request.user.username)
+        form.save()
         return super(TopicCreateView, self).form_valid(form)

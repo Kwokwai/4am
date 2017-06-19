@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load comments %}
+{% load staticfiles %}
 {% block content %}
 
 <div id="main">
@@ -35,7 +36,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="tac" style="overflow: hidden;border: 0">
-                                            <img src="#">
+                                            <img src="/media/{{ topic.author.avatar }}">
                                         </td>
                                     </tr>
                                 </tbody>

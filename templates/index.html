@@ -79,6 +79,7 @@
                 <tr class="tr3 t_one tac {{ topic.id }}">
                     <td>
                       <a>{{ topic.author }}</a>
+                         <img src="{{ topic.author_img }}">
                     </td>
                     <td class="tal" style="padding-left: 8px">
                         <a href="{% url 'forum:detail' topic.id %}">{{ topic.title }}</a>

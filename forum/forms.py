@@ -2,6 +2,7 @@
 from django import forms
 from forum.models import Topic
 from django.contrib.auth.models import User
+from user.models import UserProfile
 
 
 class TopicCreateForm(forms.Form):
@@ -23,11 +24,12 @@ class TopicCreateForm(forms.Form):
         widget=forms.Textarea(),
     )
 
-    def save(self, username):
+    def save(self):
         tittle = self.cleaned_data['title']
         content = self.cleaned_data['content']
+        user = UserProfile.objects.get()
         topic = Topic(
-            author=username,
+            author=user,
             title=tittle,
             content=content
         )

@@ -1,13 +1,13 @@
 #-*- coding:utf-8 -*-
 from django.db import models
 from django.core.urlresolvers import reverse
+from user.models import UserProfile
 
 
 class Topic(models.Model):
     title = models.CharField(max_length=100)
     abstract = models.CharField(max_length=256, blank=True)
-    author = models.CharField(max_length=100)
-    author_img = models.CharField(max_length=100, default=None, null=True)
+    author = models.ForeignKey(UserProfile)
     content = models.TextField(default=None)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now_add=True)
