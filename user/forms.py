@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 from django.contrib.auth.models import User
 from django import forms
+from .models import UserProfile
 
 
 class RegisterForm(forms.Form):
@@ -65,3 +66,9 @@ class RegisterForm(forms.Form):
         password = self.cleaned_data['password']
         user = User.objects.create_user(username, email, password)
         user.save()
+
+
+class SignatureForm(forms.Form):
+    signature = forms.CharField(
+        widget=forms.TextInput
+    )

@@ -20,27 +20,64 @@
             </font>
         </a>
     </div>
-    <div class="h guide" >
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+     <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+        <a href="{% url 'forum:index' %}" class="navbar-brand">首页</a>
+     </div>
+     <div id="navbar" class="collapse navbar-collapse bs-navbar-collapse">
          {% if user.is_authenticated %}
-                <p>你已登录，欢迎你：<a href="#">{{ user.username }}</a>
-                    <a href="{% url 'auth:logout' %}?next={{ request.path }}" >退出</a>
-                </p>
-            {% else %}
-                <p>你还没有登录，请
-                   <a href="{% url 'auth:login' %}?next={{ request.path }}">登录</a>
-                    或者
-                    <a href="{% url 'user:register' %}?next={{ request.path }}">注册</a>
-                </p>
-            {% endif %}
+         <ul class="nav navbar-nav" style="margin-left: 980px">
+             <li>
+                 <a href="{% url 'user:info' request.user.id %}">{{ user.username }}</a>
+             </li>
+         </ul>
+         <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="{% url 'auth:logout' %}?next={{ request.path }}" >退出</a>
+            </li>
+         </ul>
+         {% else %}
+         <ul class="nav navbar-nav" style="margin-left: 980px">
+             <li>
+                 <a href="{% url 'auth:login' %}?next={{ request.path }}">登录</a>
+             </li>
+         </ul>
+         <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="{% url 'user:register' %}?next={{ request.path }}">注册</a>
+            </li>
+         </ul>
+         {% endif %}
     </div>
-    <div id="showmenu" style="z-index:100;display:none;"></div>
-    <div id="blank" style="height:10px; clear:both"></div>
-</div>
-
-
+  </div>
+</nav>
 
 {% block content %}
 {% endblock %}
+
+<footer>
+  <div class="modal-footer" id="footer-back">
+      <div class="row">
+          <div class="footer-link">
+          <p style="margin-right: 550px">
+              <a href="{% url 'forum:index' %}">首页</a>
+              <a href="https://www.zhihu.com/people/guo-wei-liang-48/">知乎</a>
+              <a href="https://github.com/Kwokwai">Github</a>
+          </p>
+        <div class="copyright" style="margin-right: 520px">Copyright @2017 By Kwok</div>
+      </div>
+      </div>
+  </div>
+</footer>
+
 
 <script src="{% static "js/jquery.min.js" %}"></script>
 <script src="{% static "js/bootstrap.min.js" %}"></script>

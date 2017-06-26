@@ -54,6 +54,7 @@
     text-align: center;
 }
 
+
 td, th, div {
     word-break: break-all;
     word-wrap: break-word;
@@ -113,3 +114,13 @@ tr {
     text-align: left;
     font-weight: normal;
 }
+
+#footer-back{
+    font-size: 14px;
+    background: #d1d1ff;
+}
+
+.footer-link{
+    margin-left: 10px;
+}
+

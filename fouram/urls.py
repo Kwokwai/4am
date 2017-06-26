@@ -22,8 +22,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('forum.urls', namespace='forum')),
     url(r'', include('user.urls', namespace='user')),
+    url(r'', include('comments.urls')),
+    url(r'', include('ckeditor_uploader.urls')),
     url(r'', include('django.contrib.auth.urls', namespace='auth')),
-    url(r'^comments/', include('django_comments.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

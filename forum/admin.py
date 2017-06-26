@@ -1,5 +1,5 @@
 from django.contrib import admin
-from forum.models import Tag, Topic, Category
+from forum.models import Topic, Category
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -16,7 +16,6 @@ class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
 
 
-admin.site.register(Tag)
 admin.site.register(Category)
 admin.site.register(Topic)
 admin.site.unregister(User)

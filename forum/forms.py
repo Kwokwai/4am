@@ -1,8 +1,7 @@
 #-*-coding:utf-8 -*-
 from django import forms
-from forum.models import Topic
-from django.contrib.auth.models import User
-from user.models import UserProfile
+from ckeditor.fields import RichTextField, RichTextFormField
+from forum.models import Topic, Category
 
 
 class TopicCreateForm(forms.Form):
@@ -19,19 +18,28 @@ class TopicCreateForm(forms.Form):
     )
 
     content = forms.CharField(
-        label=u'内容',
-        min_length=10,
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={
+                              'style': 'height: 400px;width:810px'})
     )
 
-    def save(self):
+    categories = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        label=u'板块',
+        error_messages={'required': u'文章分类不能为空'},
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+
+    def save(self, user):
         tittle = self.cleaned_data['title']
         content = self.cleaned_data['content']
-        user = UserProfile.objects.get()
+        categories = self.cleaned_data['categories']
         topic = Topic(
             author=user,
             title=tittle,
+            categories=categories,
             content=content
         )
 
         topic.save()
+
+

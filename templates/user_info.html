@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load myfilters %}
+{% block content %}
+
+<div id="showmenu" style="z-index:100;display:none;"></div>
+<div id="blank" style="height:10px; clear:both"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <!--头像区域-->
+            <div class="well" style="background: white">
+                <div class="panel-heading panel-default">
+                       <a href="{{ topic.author.get_absolute_url }}" style="font-size: 25px">{{ info.user }}</a>
+                    </div>
+                <div class="panel">
+                    <div class="panel-body">
+                        <img src="{{ info.avatar.url }}" style="width: 230px;margin-left: 28px">
+                    </div>
+                </div>
+                {% if user == info.user %}
+                    {% if user.is_active %}
+                <form action="{% url 'user:updateinfo' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span>修改头像</span>
+                            </div>
+                            <div class="panel-body">
+                                <input name="avatar" type="file"  >
+                            </div>
+                            <div class="panel-footer">
+                                <button id="avatar" class="btn btn-primary" type="submit" >确认</button>
+                            </div>
+                        </div>
+                    </form>
+                        {% endif %}
+                {% else %}
+
+                {% endif %}
+            </div>
+            <!--签名区域-->
+             <div class="well" style="background: white">
+                 {{ info.signature }}
+                 <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">修改签名</button>
+             </div>
+        </div>
+        <!--评论板块-->
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        共{{ comment_nums }}条评论
+                    </div>
+                    {% for comment in comment_list %}
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'forum:detail' comment.post_id %}">{{ comment.text|safe|truncatechars:36 }}</a>
+                            <br>
+                            来自--
+                            <a href="{% url 'forum:detail' comment.post_id %}" >{{ comment.post.title|safe|truncatechars:15 }}</a>
+                            <time class="submit-date pull-right" style="margin-left: 10px" >{{ comment.created_time }}</time>
+                        </li>
+                    </ul>
+                    {% empty %}
+                    <div class="panel-body">
+                         暂时无评论
+                    </div>
+                {% endfor %}
+            </div>
+            <!--帖子板块-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    共{{ topic_nums }}个帖子
+                </div>
+                {% for topic in topic_list%}
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'forum:detail' topic.id %}">{{ topic.title }}</a>
+                            <time class="submit-date pull-right" style="margin-left: 10px" >{{ topic.create_date }}</time>
+                        </li>
+                    </ul>
+                    {% empty %}
+                    <div class="panel-body">
+                         暂时没发帖子
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+            <form action="{% url 'user:create' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <textarea  name="signature" class="form-control"  required="required" title="" id="textarea" placeholder="{{ info.signature }}"></textarea><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary" value="Submit">确定</button>
+                </div>
+            </form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

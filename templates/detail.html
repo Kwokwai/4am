@@ -1,26 +1,25 @@
 {% extends "base.html" %}
-{% load comments %}
 {% load staticfiles %}
+{% load myfilters %}
 {% block content %}
 
 <div id="main">
-    <div class="t3" style="margin: 8px auto">
-        <table width="100%" align="center" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <a href="#">4am</a>
-                     »
-                    <a href="#">板块</a>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <ol class="breadcrumb">
+    <li>
+        <a href="{% url 'forum:index' %}">4am</a>    </li>
+    <li>
+        <a href="{% url 'forum:category' topic.categories_id %}">{{ topic.categories }}</a>
+    </li>
+</ol>
     <div class="t" style="margin-bottom: 0;border-bottom: 0">
         <table cellspacing="0" cellpadding="0" width="100%" align="center">
              <tbody>
               <tr>
-               <td class="h"> --&gt; <b>本頁主題:</b>{{ topic.title }}</td>
+               <td class="h"> --&gt; <b>本頁主題:</b>{{ topic.title }}
+                    <a class="fr a2 fn" href="{% url 'forum:create' %}">发布新主题</a>
+                </td>
                <td class="h" style="text-align:right;"></td>
+
               </tr>
              </tbody>
         </table>
@@ -29,52 +28,54 @@
         <table cellspacing="0" cellpadding="0" width="100%" align="center">
             <tbody>
                 <tr class="tr1 do_not_catch">
-                    <th width="20%" rowspan="2" class="r_two">
-                        <b>{{ topic.author }}</b>
-                        <div style="padding: 10px 0;">
-                            <table width="98%" cellspacing="0" cellpadding="0" style="border: 0">
-                                <tbody>
-                                    <tr>
-                                        <td class="tac" style="overflow: hidden;border: 0">
-                                            <img src="/media/{{ topic.author.avatar }}">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!--作者区域--->
+                    <td width="20%" rowspan="2" class="r_two">
+                        <div class="panel" style="margin-left: 10px">
+                            <div class="panel-heading panel-default">
+                               <a href="{{ topic.author.get_absolute_url }}" style="font-size: 25px">{{ topic.author }}</a>
+                            </div>
+                            <div class="panel-body">
+                                <img src="{{ topic.author.avatar.url }}" style="width: 120px;margin-left: 50px">
+                            </div>
+                            <div class="panel-body">
+                                {{ topic.author.signature }}
+                            </div>
                         </div>
-                    </th>
-                    <th height="100%" valign="top" style="padding: 5px 15px 0 15px;border: 0;width: 80%;overflow: hidden">
-                        <table width="100%" align="center" cellspacing="0" cellpadding="0">
-                            <tbody>
-                                <tr>
-                                    <td bgcolor valign="top">
-                                        <h4>{{ topic.title }}</h4>
-                                        <br>
-                                        <div class="tpc_content do_not_catch">
-                                            <br>
-                                            <br>
-                                            {{ topic.content }}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </th>
+                    </td>
+                    <!--正文区域-->
+                    <td height="100%" valign="top" style="padding: 5px 15px 0 15px;border: 0;width: 80%;overflow: hidden">
+                        <div class="panel">
+                            <div class="panel-heading panel-default" style="font-size: 20px">
+                                <strong>{{ topic.title }}</strong>
+                                <time class="submit-date pull-right" style="margin-left: 10px">{{ topic.create_date }}&nbsp;&nbsp;&nbsp;</time>
+                            </div>
+                            <div class="panel-body" style="min-height: 210px">
+                                <h3>{{ topic.content|custom_markdown }}</h3>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-
+    <!--评论区域-->
     <div class="t t2">
         <table cellspacing="0" cellpadding="0" width="100%" align="center">
-            {% get_comment_list for topic as comments %}
-            {% for comment in comments %}
+            {% for comment in comment_list %}
             <tr class="tr3 tr1">
-                <th width="20%"  class="r_two">
-                    {{ comment.user_name }}
+                <th width="10%"  class="r_two">
+                    <img src="{{ comment.name.avatar.url }}" style="width: 96px; height: 96px;">
                 </th>
                 <th>
-                    {{ comment.comment }}
+                    <div class="panel" style="min-height: 150px">
+                         <div class="panel-heading panel-default">
+                            <a href="{{ comment.name.get_absolute_url }}">{{ comment.name }}</a>
+                             <span class="pull-right">{{ forloop.counter }} 楼</span>
+                             <time class="submit-date pull-right" style="margin-left: 10px">{{ comment.created_time }}&nbsp;&nbsp;&nbsp;</time>
+                        </div>
+                        <div class="panel-body">{{ comment.text|custom_markdown }}</div>
+                    </div>
+                    {{ comment.name.signature }}
                 </th>
             </tr>
             {% empty %}
@@ -82,17 +83,8 @@
             {% endfor %}
         </table>
     </div>
-
-{% get_comment_form for topic as blog_form %}
-<form id="comment_form" class="form-horizontal" action="{% comment_form_target %}" method="post">
-    {% csrf_token %}
-
-    {{ blog_form.object_pk }}
-    {{ blog_form.content_type }}
-    {{ blog_form.timestamp }}
-    {{ blog_form.site }}
-    {{ blog_form.submit_date }}
-    {{ blog_form.security_hash }}
+<!--回复区域-->
+<form action="{% url 'comments:post_comment' topic_id=topic.id %}" method="post" class="comment-form">    {% csrf_token %}
     {% if user.is_authenticated %}
         {% if user.is_active %}
     <div class="t">
@@ -102,37 +94,21 @@
             </tr>
             <tr></tr>
             <tr>
-                <td valign="top" width="20%" bgcolor="#F9F9EC" style="padding:7px">
+                <td width="20%" bgcolor="#F9F9EC" style="padding: 7px">
 
-                    <b>用户</b><br><br>
-               　　　 {{ user.username }}
                 </td>
-                <td width="60%" bgcolor="#F9F9EC" style="padding: 7px">
-                    <div>
-                        <input type="text"  value="Re:{{ topic.title }}" size="65" readonly="readonly" style="width: 70%">
-                    </div>
 
-                        <a name="newcomment" id="newcomment"></a>
-                        <div class="control-group">
-                            <label class="control-label" for="id_comment">评论： </label>
-                            <div class="controls">
-                                <textarea rows="6"
-                                          id="id_comment" class="input-xlarge comment" name="comment"
-                                          placeholder="请输入评论内容" style="width:70%">
-                                </textarea>
-                            </div>
+                <td width="80%" bgcolor="#F9F9EC" style="padding: 7px">
+                    <div class="control-group">
+                        <div class="controls" style="width: 500px">
+                            <label for="{{ form.text.id_for_label }}" >评论：</label>
+                            {{ form.text }}
                         </div>
-
-
+                    </div>
                     <div class="controls">
-                        <div class="form-actions">
-                            <input class="btn btn-info" id="submit_btn" type="submit" name="submit" value="提交"/>
-                            <input type="hidden" name="next" value="{%url 'forum:detail' topic.id%}"/>
-                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 450px">发表</button>
                     </div>
-
                 </td>
-
             </tr>
         </table>
     </div>
@@ -149,6 +125,7 @@
     </div>
     {% endif %}
 </form>
+
 
 
 {% endblock %}
