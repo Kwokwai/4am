@@ -8,7 +8,7 @@ from django import forms
 
 
 class Topic(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=36)
     abstract = models.CharField(max_length=256, blank=True)
     author = models.ForeignKey(UserProfile)
     content = RichTextUploadingField(verbose_name='正文')

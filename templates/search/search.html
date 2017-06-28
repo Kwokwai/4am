@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load highlight %}
+{% block content %}
+<div class="">
+    <div class="" style="min-height: 500px;width: 800px;margin-left: 200px">
+        <div class="panel-group">
+            {% if query %}
+               <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>搜索结果:</h3>
+                    </div>
+            {% for result in page.object_list %}
+                    <ul class="list-group">
+                        <li class="list-group-item" id="se_hi">
+                            <a  href="{% url 'forum:detail' result.object.id %}">{{ result.object.title }}</a>
+                            {% highlight result.object.content with query  css_class "search-highlight" max_length 200 %}
+                        </li>
+                    </ul>
+            {% empty %}
+                <p class="panel-body">非常抱歉,没找到相关内容^_^</p>
+            {% endfor %}
+            {% else %}
+                <p class="well">请输入你所需要的关键词*_*</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

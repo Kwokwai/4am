@@ -5,6 +5,9 @@ import markdown
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.utils.html import format_html
+
 register = template.Library()
 
 
@@ -20,3 +23,5 @@ def custom_markdown(value):
                                        extensions=['markdown.extensions.fenced_code', 'markdown.extensions.codehilite'],
                                        safe_mode=True,
                                        enable_attributes=False))
+
+

@@ -24,17 +24,23 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="container">
      <div class="navbar-header">
-        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-        <a href="{% url 'forum:index' %}" class="navbar-brand">首页</a>
+         <ul class="nav navbar-nav">
+             <li>
+                 <a href="{% url 'forum:index' %}" class="navbar-brand">首页</a>
+             </li>
+             <li>
+                <form class="navbar-form navbar-right" method="get" action="{% url 'haystack_search' %}">
+                    <div class="form-group">
+                        <input name="q" class="form-control" placeholder="搜索帖子">
+                    </div>
+                    <button type="submit" class="btn btn-primary">确定</button>
+                </form>
+            </li>
+         </ul>
      </div>
      <div id="navbar" class="collapse navbar-collapse bs-navbar-collapse">
          {% if user.is_authenticated %}
-         <ul class="nav navbar-nav" style="margin-left: 980px">
+         <ul class="nav navbar-nav" style="margin-left: 680px;">
              <li>
                  <a href="{% url 'user:info' request.user.id %}">{{ user.username }}</a>
              </li>
@@ -62,6 +68,7 @@
 
 {% block content %}
 {% endblock %}
+
 
 <footer>
   <div class="modal-footer" id="footer-back">

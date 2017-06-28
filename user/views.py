@@ -2,11 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegisterForm
 from .models import UserProfile
 from django.views.generic import DetailView
-from django.views.generic.edit import FormView, CreateView
-from django.views.generic import UpdateView
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from user.forms import SignatureForm
 from PIL import Image
 import time

@@ -37,14 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
     'forum',
     'user',
     'comments',
     'ckeditor',
     'ckeditor_uploader',
     'markdown',
+    'paginator',
 ]
-
 
 SITE_ID = 1
 
@@ -148,7 +149,7 @@ CKEDITOR_IMAGE_BACKEND='pillow'
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
-        'toolbar_Custom': [  #这里是编辑器的各种功能按钮
+        'toolbar_Custom': [
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['Link', 'Unlink'],
@@ -157,3 +158,13 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'forum.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
+
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

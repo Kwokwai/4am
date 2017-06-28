@@ -7,12 +7,14 @@ from forum.models import Topic, Category
 from forum.forms import TopicCreateForm
 from user.models import UserProfile
 from comments.forms import CommentForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class IndexView(ListView):
     model = Topic
     template_name = 'index.html'
     context_object_name = 'topic_list'
+    paginate_by = 20
 
     def get_queryset(self):
         topic_list = Topic.objects.all()

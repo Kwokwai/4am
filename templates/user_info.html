@@ -41,7 +41,11 @@
             <!--签名区域-->
              <div class="well" style="background: white">
                  {{ info.signature }}
+                 {% if user == info.user %}
                  <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">修改签名</button>
+                 {% else %}
+
+                {% endif %}
              </div>
         </div>
         <!--评论板块-->

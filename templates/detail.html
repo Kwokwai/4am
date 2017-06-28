@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load paginator_tags %}
 {% load staticfiles %}
 {% load myfilters %}
 {% block content %}
@@ -16,8 +17,12 @@
              <tbody>
               <tr>
                <td class="h"> --&gt; <b>本頁主題:</b>{{ topic.title }}
+                    {% if user.is_authenticated %}
                     <a class="fr a2 fn" href="{% url 'forum:create' %}">发布新主题</a>
-                </td>
+                    {% else %}
+                        <span class="pull-right">需要登录才能发新帖子</span>
+                    {% endif %}
+               </td>
                <td class="h" style="text-align:right;"></td>
 
               </tr>
@@ -82,6 +87,7 @@
             <tr>暂无评论</tr>
             {% endfor %}
         </table>
+    {% paginator %}
     </div>
 <!--回复区域-->
 <form action="{% url 'comments:post_comment' topic_id=topic.id %}" method="post" class="comment-form">    {% csrf_token %}

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'', include('user.urls', namespace='user')),
     url(r'', include('comments.urls')),
     url(r'', include('ckeditor_uploader.urls')),
+    url(r'^search/', include('haystack.urls')),
     url(r'', include('django.contrib.auth.urls', namespace='auth')),
 ]
 
